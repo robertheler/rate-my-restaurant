@@ -66,13 +66,16 @@ INSERT INTO Restaurants(restaurantName) VALUES ('Taste of Korea');
 INSERT INTO Restaurants(restaurantName) VALUES ('Taste of India');
 INSERT INTO Restaurants(restaurantName) VALUES ('Taste of Vietnam');
 
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (1, 5, "2020-04-02", 1, "It was delicious!", 1, Null, Null, "I'm glad you enjoyed it!", 1, "2020-04-03");
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (1, 2, "2020-03-23", NULL, "Wasn't great", 1, 1, Null, NULL, 2);
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 4, "2020-02-12", 2, "Love this place", 1, Null, 1, "Thank you!", 3, "2020-02-13");
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (3, 5, "2020-01-10", Null, "Best Naan in town", 1, 1, 1, Null, 4);
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (4, 5, "2020-03-25", Null, "Try their springrolls", 1, Null, Null, Null, 5);
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (3, 4, "2020-01-10", 1, "Lamb curry was my favorite", 1, Null, Null, Null, 3);
-INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 3, "2020-05-01", Null, "Too spicy", Null, Null, Null, Null, 5);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (1, 5, "2020-04-02", 1, "It was delicious!", 1, 0, 0, "I'm glad you enjoyed it!", 1, "2020-04-03");
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (1, 2, "2020-03-23", 0, "Wasn't great", 1, 1, 0, Null, 2, NULL);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 4, "2020-02-12", 2, "Love this place", 1, 0, 1, "Thank you!", 3, "2020-02-13");
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (3, 5, "2020-01-10", 0, "Best Naan in town", 1, 1, 1, Null, 4, Null);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (4, 5, "2020-03-25", 0, "Try their springrolls", 1, 0, 0, Null, 5, Null);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (3, 4, "2020-01-10", 1, "Lamb curry was my favorite", 1, 0, 0, Null, 3, Null);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 3, "2020-05-01", 0, "Too spicy", 0, 0, 0, Null, 5, Null);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 1, "2020-05-5", 0, "Service was terrible", 0, 0, 0, "I am sorry to hear that you felt that way. Please let us know how we can make the experience better next time", 5, "2020-05-08");
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 3, "2020-04-12", 0, "It was just okay", 0, 0, 0, Null, 2, Null);
+INSERT INTO Reviews (restaurantID, stars, uploadDate, restaurantVisit, content, emojiUseful, emojiFunny, emojiCool, reply, userID, replyDate) VALUES (2, 5, "2020-04-12", 1, "It was really  delicious!", 1, 0, 0, "I'm glad you enjoyed it! Please come again.", 1, "2020-04-15");
 
 INSERT INTO Pictures (picDescript, picURL, uploadDate, userID, helpful, notHelpful, reviewID) VALUES ("Menu", "https://fec-yelpreviews.s3-us-west-1.amazonaws.com/reviewpics/italian_menu1.jpg", "2020-04-02", 1, 1, 1, 1);
 INSERT INTO Pictures (picDescript, picURL, uploadDate, userID, helpful, notHelpful, reviewID) VALUES ("Pasta", "https://fec-yelpreviews.s3-us-west-1.amazonaws.com/reviewpics/pasta_pic1.jpg", "2020-04-02", 1, 1, Null, 1);

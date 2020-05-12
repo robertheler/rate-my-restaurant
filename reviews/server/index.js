@@ -3,11 +3,15 @@ const db = require('../database/index.js');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 8080;
+const port = 3003;
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // app.get('/reviews', (req, res) => {
 //   db.allReviews((error, data) => {
