@@ -82,7 +82,7 @@ class App extends React.Component {
   }
 
     componentDidMount() {
-      axios.get('/reviews/restaurants/2')
+      axios.get('http://localhost:3003/reviews/restaurants/2')
         .then(res => {
           console.log('GET review request successful:', res.data)
           let allreviews = res.data;
@@ -97,7 +97,7 @@ class App extends React.Component {
     handleSubmit() {
       let searchedWord = this.state.searchedTerm;
       console.log(searchedWord)
-      axios.get(`/reviews/restaurants/2?q=${searchedWord}`)
+      axios.get(`http://localhost:3003/reviews/restaurants/2?q=${searchedWord}`)
         .then(res => {
           console.log(res);
           this.setState({
@@ -116,7 +116,7 @@ class App extends React.Component {
 
     handleChangeSort(event) {
       const value = event.target.value;
-      axios.get(`/reviews/restaurants/2?sort_by=${value}`)
+      axios.get(`http://localhost:3003/reviews/restaurants/2?sort_by=${value}`)
         .then(res => {
           this.setState({
             reviews: res.data,
@@ -130,7 +130,7 @@ class App extends React.Component {
     }
 
     handleSubmitClear() {
-      axios.get('/reviews/restaurants/2')
+      axios.get('http://localhost:3003/reviews/restaurants/2')
         .then(res => {
           let allreviews = res.data;
           allreviews.sort((a, b) => Date.parse(b.uploadDate) - Date.parse(a.uploadDate))
@@ -145,7 +145,7 @@ class App extends React.Component {
     }
 
     buttonSubmit(emoji, reviewID) {
-      axios.post('/reviews/emoji', { emoji, reviewID })
+      axios.post('http://localhost:3003/reviews/emoji', { emoji, reviewID })
         .then(res => {
           axios.get('/reviews/restaurants/2')
           .then(res => {
