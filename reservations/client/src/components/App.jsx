@@ -94,7 +94,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='calendar-container'>
         <ReservationBox state={this.state} reservationMethods={this.reservationMethods}/>
       </div>
     );
