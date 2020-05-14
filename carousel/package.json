@@ -11,7 +11,7 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/start.js",
     "start": "live-server",
-    "seed": "mysql -u student -p < schema.sql",
+    "seed": "mysql -u root -pkiefer898 < schema.sql",
     "test": "jest --coverage --colors --watchAll"
   },
   "dependencies": {

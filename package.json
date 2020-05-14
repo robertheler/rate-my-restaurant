@@ -2,7 +2,7 @@
   "name": "yelp_main",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/server/index.js",
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",

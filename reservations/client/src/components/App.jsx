@@ -42,7 +42,7 @@ class App extends React.Component {
 
   getScheduleData() {
     $.ajax({
-      url: 'http://localhost:3001/reservations/2',
+      url: '/reservations/2',
       success: (data) => {
         this.setData(data);
       },
@@ -94,7 +94,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='calendar-container'>
         <ReservationBox state={this.state} reservationMethods={this.reservationMethods}/>
       </div>
     );

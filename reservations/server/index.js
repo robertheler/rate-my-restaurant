@@ -7,16 +7,11 @@ const app = express();
 
 const publicFolder = path.join(__dirname, '/..', 'client', 'dist');
 const publicHTML = path.join(publicFolder, 'index.html');
-const publicBundle = path.join(publicFolder, 'bundle.js');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(publicFolder));
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
 
 app.listen(3001, () => {
   console.log('Server listening on port 3001!');
@@ -24,10 +19,6 @@ app.listen(3001, () => {
 
 app.get('/', (req, res) => {
   res.send(publicHTML);
-});
-
-app.get('/bundle.js', (req, res) => {
-  res.send(publicBundle);
 });
 
 app.get('/reservations/:id', (req, res) => {
