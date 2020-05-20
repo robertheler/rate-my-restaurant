@@ -2,7 +2,7 @@
   "name": "yelp_main",
   "version": "1.0.0",
   "description": "",
-  "main": "/server/index.js",
+  "main": "/proxy/index.js",
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
@@ -21,7 +21,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-main": "nodemon ./server/index.js",
+    "start": "npm run start-main",
+    "start-main": "nodemon ./proxy/index.js",
     "start-reservations": "nodemon ./reservations/server/index.js",
     "start-carousel": "nodemon ./carousel/server/start.js",
     "start-reviews": "nodemon ./reviews/server/index.js"

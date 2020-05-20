@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import calendarHelpers from '../calendarHelpers.js';
 import ReservationBox from './ReservationBox.jsx';
+const host = 'http://localhost:3001';
 
 class App extends React.Component {
   constructor(props) {
@@ -41,8 +42,9 @@ class App extends React.Component {
   }
 
   getScheduleData() {
+    let id = 2;
     $.ajax({
-      url: '/reservations/2',
+      url: host + `/reservations/${id}`,
       success: (data) => {
         this.setData(data);
       },

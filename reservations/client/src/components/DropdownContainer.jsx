@@ -91,7 +91,7 @@ const TimeDropdown = (props) => (
       </SvgDark>
     </RightSvgSpan>
     <SelectBox>
-    {props.timeslots[calendarHelpers.weekdayFromId(props.selectedDateId)].map((slot) => <option value={slot}>
+    {props.timeslots[calendarHelpers.weekdayFromId(props.selectedDateId)].map((slot, i) => <option key={i} value={slot}>
       {parseTimeslot(slot)}</option>)}
     </SelectBox>
   </SelectWrapper>
@@ -111,7 +111,7 @@ const SizeDropdown = () => (
     </RightSvgSpan>
     <SelectBox defaultValue='2'>
     <option value='1'>1 person</option>
-    {peopleArray(20).map((number) => <option value={number}>{number} people</option>)}
+    {peopleArray(20).map((number, i) => <option key={i} value={number}>{number} people</option>)}
     </SelectBox>
   </SelectWrapper>
 );

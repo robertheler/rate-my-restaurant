@@ -11,6 +11,18 @@ const FindTableButton = styled.div`
   border-radius: 4px;
   clear: left;
   background: #f43939;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8
+  }
+  &:active {
+    -webkit-transform: scale(0.98);
+  }
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 `;
 
 export default FindTableButton;

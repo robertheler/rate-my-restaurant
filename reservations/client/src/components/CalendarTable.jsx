@@ -23,12 +23,13 @@ const CalendarTable = (props) => (
     <Table>
       <tbody>
       <WeekdayRow>
-      {weekdays.map((day) => <td>{day}</td>)}
+      {weekdays.map((day, i) => <td key={i} >{day}</td>)}
       </WeekdayRow>
-      {props.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-        {row.map((dateId) => <CalendarDate
+      {props.state.rowsOfSelectedMonth.map((row, i) => <CalendarRow key={i}>
+        {row.map((dateId, i) => <CalendarDate
           onClick={props.reservationMethods.selectDate}
           id={dateId}
+          key={i}
           past={props.calendarMethods.isPast(dateId)}
           isToday={props.calendarMethods.isToday(dateId)}
           selected={dateId === props.selectedId}>

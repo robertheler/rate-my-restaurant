@@ -2,6 +2,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('../database/index.js');
+const cors = require('cors');
 
 const app = express();
 
@@ -10,11 +11,12 @@ const publicHTML = path.join(publicFolder, 'index.html');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.use(express.static(publicFolder));
 
 app.listen(3001, () => {
-  console.log('Server listening on port 3001!');
+  console.log('Server listening on port http://localhost:3001');
 });
 
 app.get('/', (req, res) => {
@@ -22,14 +24,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/reservations/:id', (req, res) => {
-  console.log('responding to get request for reservations');
   db.getSchedule(req.params.id, (err, schedule) => {
     if (err) {
       res.status(404);
       res.end();
       console.log(err);
     } else {
-      console.log(schedule);
       res.status(200);
       res.send(schedule);
       res.end();
