@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 const express = require('express');
 const path = require('path');
-const db = require('../database/index.js');
+//const db = require('../database/cassandra/index.js');
+const db = require('../database/postgres/index.js');
 const cors = require('cors');
+const schedule = require('../database/expected-by-client.json');
 
 const app = express();
 
@@ -23,16 +25,23 @@ app.get('/', (req, res) => {
   res.send(publicHTML);
 });
 
-app.get('/reservations/:id', (req, res) => {
-  db.getSchedule(req.params.id, (err, schedule) => {
+app.get('/api/restaurants/:id', (req, res) => {
+  console.log(db);
+  db.get(req.params.id, (err, results) => {
     if (err) {
       res.status(404);
       res.end();
       console.log(err);
     } else {
       res.status(200);
-      res.send(schedule);
+      res.send(results);
       res.end();
     }
   });
+});
+
+app.get('/legacy/:id', (req, res) => {
+  res.status(200);
+  res.send(schedule);
+  res.end();
 });

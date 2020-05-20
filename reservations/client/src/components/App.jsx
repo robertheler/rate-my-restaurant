@@ -44,7 +44,7 @@ class App extends React.Component {
   getScheduleData() {
     let id = 2;
     $.ajax({
-      url: host + `/reservations/${id}`,
+      url: host + `/legacy/${id}`,
       success: (data) => {
         this.setData(data);
       },

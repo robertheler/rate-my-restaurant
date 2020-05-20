@@ -1,0 +1,21 @@
+{
+  "property_id": 0,
+  "description": "This house is pretty",
+  "images": [
+    {
+      "image_id": 0,
+      "url": "https://picsum.photos/800/600.webp",
+      "description": "This is the kitchen"
+    },
+    {
+      "image_id": 1,
+      "url": "https://picsum.photos/800/600.webp",
+      "description": "This is the bathroom"
+    },
+    {
+      "image_id": 2,
+      "url": "https://picsum.photos/800/600.webp",
+      "description": "This is the bedroom"
+    }
+  ]
+}

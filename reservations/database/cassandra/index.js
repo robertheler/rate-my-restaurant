@@ -12,7 +12,7 @@ db.once('open', () => {
   seeder.seed();
 });
 
-const getSchedule = (id, callback) => {
+const get = (id, callback) => {
   schema.ReservationSchedule.findOne({ id }, (err, schedule) => {
     if (err) {
       console.log(err);
@@ -23,4 +23,4 @@ const getSchedule = (id, callback) => {
   });
 };
 
-module.exports.getSchedule = getSchedule;
+module.exports.get = get;

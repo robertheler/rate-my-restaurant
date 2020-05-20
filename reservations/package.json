@@ -10,7 +10,8 @@
   "scripts": {
     "start-dev": "nodemon /server/index.js",
     "compile": "webpack -d --watch",
-    "snapshot-all": "jest --updateSnapshot"
+    "snapshot-all": "jest --updateSnapshot",
+    "seed-postgres": "psql -U postgres < ./database/postgres/schema.sql"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -21,6 +22,7 @@
     "jquery": "^3.5.0",
     "moment": "^2.25.3",
     "mongoose": "^5.9.11",
+    "pg": "^8.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0"

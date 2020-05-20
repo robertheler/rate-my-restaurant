@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require ('path');
 
-const publicFolder = path.join(__dirname, '../', 'dist');
+const publicFolder = path.join(__dirname, './');
 const publicHTML = path.join(publicFolder, 'index.html');
 
 app.use(express.urlencoded({ extended: true }));
