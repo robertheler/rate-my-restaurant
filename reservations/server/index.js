@@ -26,8 +26,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/restaurants/:id', (req, res) => {
-  console.log(db);
   db.get(req.params.id, (err, results) => {
+    if (err) {
+      res.status(404);
+      res.end();
+      console.log(err);
+    } else {
+      res.status(200);
+      res.send(results);
+      res.end();
+    }
+  });
+});
+
+app.post('/api/restaurants/', (req, res) => {
+  db.postRestaurant(req.params.name, (err, results) => {
     if (err) {
       res.status(404);
       res.end();
