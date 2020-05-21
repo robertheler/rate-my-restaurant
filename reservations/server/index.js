@@ -26,7 +26,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/restaurants/:id', (req, res) => {
-  db.get(req.params.id, (err, results) => {
+  db.getAllAvailability(req.params.id, (err, results) => {
+    if (err) {
+      res.status(404);
+      res.end();
+      console.log(err);
+    } else {
+      res.status(200);
+      res.send(results);
+      res.end();
+    }
+  });
+});
+
+app.get('/api/restaurants/:id/:date/:size', (req, res) => {
+  db.getSpecificAvailability(req.params.id, req.params.date, req.params.size, (err, results) => {
     if (err) {
       res.status(404);
       res.end();
@@ -40,13 +54,27 @@ app.get('/api/restaurants/:id', (req, res) => {
 });
 
 app.post('/api/restaurants/', (req, res) => {
-  db.postRestaurant(req.params.name, (err, results) => {
+  db.postRestaurant(req.body, (err, results) => {
     if (err) {
       res.status(404);
       res.end();
       console.log(err);
     } else {
-      res.status(200);
+      res.status(201);
+      res.send(results);
+      res.end();
+    }
+  });
+});
+
+app.delete('/api/tables/:id', (req, res) => {
+  db.deleteTable(req.params.id, (err, results) => {
+    if (err) {
+      res.status(404);
+      res.end();
+      console.log(err);
+    } else {
+      res.status(204);
       res.send(results);
       res.end();
     }
