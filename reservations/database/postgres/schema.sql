@@ -5,6 +5,7 @@ CREATE DATABASE ratemyrestaurant;
 \c ratemyrestaurant;
 
 DROP TABLE IF EXISTS restaurants;
+DROP TABLE IF EXISTS tables;
 DROP TABLE IF EXISTS availability;
 
 CREATE TABLE restaurants(
@@ -12,17 +13,15 @@ CREATE TABLE restaurants(
    name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE availability(
-   availability_id SERIAL PRIMARY KEY,
-   restaurant_id INTEGER REFERENCES restaurant(restaurant_id),
-   date date NOT NULL,
-   time CHAR(4) NOT NULL
+CREATE TABLE tables(
+   table_id INTEGER PRIMARY KEY,
+   restaurant_id INTEGER REFERENCES restaurants(restaurant_id) NOT NULL,
+   table_capacity INTEGER CHECK (table_capacity > 0) NOT NULL
 );
 
-
-INSERT INTO restaurants VALUES (1, 'Bertys Oasis');
-INSERT INTO restaurants VALUES (2, 'Bertys Oasis 2');
-INSERT INTO restaurants VALUES (3, 'Bertys Oasis 3');
-
--- INSERT INTO imagearray VALUES (0, 0,'https://6-pack.s3-us-west-1.amazonaws.com/00/0.jpg', 'Rock Reach House - mail floor');
--- INSERT INTO imagearray VALUES (1, 0, 'https://6-pack.s3-us-west-1.amazonaws.com/00/1.jpg', 'Rock Reach House - dawn outside');
+CREATE TABLE availability(
+   availability_id SERIAL PRIMARY KEY,
+   table_id INTEGER REFERENCES tables(table_id),
+   date DATE NOT NULL,
+   available_times CHAR(5) [] NOT NULL
+);
