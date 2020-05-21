@@ -53,7 +53,7 @@
       "website": "String",
       "googleMap": "String location",
       "costRating": "Number",
-      "review": Number
+      "review": "Number"
     }
 ```
 
