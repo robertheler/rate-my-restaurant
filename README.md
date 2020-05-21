@@ -78,11 +78,11 @@
     }
 ```
 
-### Delete restaurant
-  * DELETE `/api/restaurant/:id`
+### Delete table
+  * DELETE `/api/tables/:id`
 
 **Path Parameters:**
-  * `id` restaurant id
+  * `id` table id
 
 **Success Status Code:** `204`
 
