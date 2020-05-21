@@ -105,7 +105,6 @@ const getSpecificAvailability = (id, date, size, callback) => {
 
 //POST api/restaurants/:name
 const postRestaurant = (restaurant, callback) => {
-  console.log(restaurant);
   pool.query(`INSERT INTO restaurants VALUES(DEFAULT, '${restaurant.name}')`, (err, res) => {
     if (err) {
       callback(err);
@@ -115,6 +114,24 @@ const postRestaurant = (restaurant, callback) => {
   });
 };
 
+//DELETE api/table/:id
+const deleteTable = (id, callback) => {
+  pool.query(`DELETE FROM availability WHERE table_id = ${id}`, (err, res) => {
+    if (err) {
+      callback(err);
+    } else {
+      pool.query(`DELETE FROM tables WHERE id = ${id}`, (err, res) => {
+        if (err) {
+          callback(err);
+        } else {
+          callback(null, res);
+        }
+      });
+    }
+  });
+};
+
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
 module.exports.postRestaurant = postRestaurant;
+module.exports.deleteTable = deleteTable;
