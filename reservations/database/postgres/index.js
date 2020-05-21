@@ -104,8 +104,9 @@ const getSpecificAvailability = (id, date, size, callback) => {
 
 
 //POST api/restaurants/:name
-const postRestaurant = (name, callback) => {
-  pool.query(`INSERT INTO restaurants(name) VALUES('${name}')`, (err, res) => {
+const postRestaurant = (restaurant, callback) => {
+  console.log(restaurant);
+  pool.query(`INSERT INTO restaurants VALUES(DEFAULT, '${restaurant.name}')`, (err, res) => {
     if (err) {
       callback(err);
     } else {
@@ -117,16 +118,3 @@ const postRestaurant = (name, callback) => {
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
 module.exports.postRestaurant = postRestaurant;
-
-// //routes
-// app.post("/api/property/", async (req, res) => {
-//   try {
-//     pool.query(`INSERT INTO property VALUES (${req.body.property_id}, '${req.body.description}')`);
-//     req.body.images.map(image => {
-//       pool.query(`INSERT INTO imagearray VALUES (DEFAULT, ${req.body.property_id}, '${image.url}', '${image.description}')`);
-//     });
-//     res.send("Inserted");
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
