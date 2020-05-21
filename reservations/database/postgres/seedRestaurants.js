@@ -15,7 +15,7 @@ const pool = new Pool({
 let inserted = 0;
 let tableID = 0;
 for (var restaurantID = 1; restaurantID <= 10; restaurantID++) {
-  const query = "INSERT INTO restaurants(restaurant_id, name) VALUES($1, $2)";
+  const query = "INSERT INTO restaurants(id, name) VALUES($1, $2)";
   const values = [restaurantID, lorem.generateWords(2)];
   pool
     .query(query, values)

@@ -13,7 +13,7 @@ const pool = new Pool({
 //GET api/restaurants/:id
 const getAllAvailability = (id, callback) => {
   pool.query(
-    `SELECT name FROM restaurants WHERE restaurant_id = ${id}`,
+    `SELECT name FROM restaurants WHERE id = ${id}`,
     (err, name) => {
       if (err) {
         callback(err);
@@ -21,14 +21,14 @@ const getAllAvailability = (id, callback) => {
         callback(null, {});
       } else {
         pool.query(
-          `SELECT * FROM availability INNER JOIN tables ON (availability.table_id = tables.table_id) WHERE tables.restaurant_id = ${id}`,
+          `SELECT * FROM availability INNER JOIN tables ON (availability.table_id = tables.id) WHERE tables.restaurant_id = ${id}`,
           (err, res) => {
             if (err) {
               callback(err);
             } else {
               let result = {
-                restaurant_id: id,
-                restaurant_name: name.rows[0].name,
+                id: id,
+                name: name.rows[0].name,
                 dates: {}
               };
               for (var i = 0; i < res.rows.length; i++) {
@@ -36,16 +36,16 @@ const getAllAvailability = (id, callback) => {
                 if (!result.dates[date]) {
                   result.dates[date] = [
                     {
-                      table_id: res.rows[i].table_id,
-                      table_capacity: res.rows[i].table_capacity,
-                      available_times: res.rows[i].available_times
+                      id: res.rows[i].table_id,
+                      capacity: res.rows[i].capacity,
+                      times: res.rows[i].times
                     }
                   ];
                 } else {
                   result.dates[date].push({
-                    table_id: res.rows[i].table_id,
-                    table_capacity: res.rows[i].table_capacity,
-                    available_times: res.rows[i].available_times
+                    id: res.rows[i].table_id,
+                    capacity: res.rows[i].capacity,
+                    times: res.rows[i].times
                   });
                 }
               }
@@ -58,11 +58,11 @@ const getAllAvailability = (id, callback) => {
   );
 };
 
-//GET api/restaurants/:id
+//GET /api/restaurants/:id/:date/:size
 const getSpecificAvailability = (id, date, size, callback) => {
   console.log(date);
   pool.query(
-    `SELECT name FROM restaurants WHERE restaurant_id = ${id}`,
+    `SELECT name FROM restaurants WHERE id = ${id}`,
     (err, name) => {
       if (err) {
         callback(err);
@@ -72,9 +72,9 @@ const getSpecificAvailability = (id, date, size, callback) => {
         pool.query(
           `SELECT *
           FROM availability INNER JOIN tables
-          ON (availability.table_id = tables.table_id)
+          ON (availability.table_id = tables.id)
           WHERE tables.restaurant_id = ${id}
-          AND tables.table_capacity >= ${size}
+          AND tables.capacity >= ${size}
           AND availability.date::date = '${date}'`,
           (err, res) => {
             if (err) {
@@ -89,8 +89,8 @@ const getSpecificAvailability = (id, date, size, callback) => {
               for (var i = 0; i < res.rows.length; i++) {
                   result.tables.push({
                     id: res.rows[i].table_id,
-                    capacity: res.rows[i].table_capacity,
-                    times: res.rows[i].available_times
+                    capacity: res.rows[i].capacity,
+                    times: res.rows[i].times
                   });
               }
               callback(err, result);
@@ -101,29 +101,10 @@ const getSpecificAvailability = (id, date, size, callback) => {
     }
   );
 };
-// pool.query(`SELECT * FROM availability INNER JOIN tables ON (availability.table_id = tables.table_id) WHERE tables.restaurant_id = ${id}`, (err, res) => {
-//   if (err) {
-//     callback(err);
-//   } else {
-//     console.log(res.rows);
-//     pool.query(`SELECT name FROM restaurants WHERE restaurant_id = ${id}`, (err, name) => {
-//       if (err) {
-//         callback(err);
-//       } else if (name.rows.length === 0){
-//         callback(null, {});
-//       } else {
-//         output = {
-//           restaurant_id: id,
 
-//         }
-//         callback(err, res.rows);
-//       }
-//     })
-//   }
-// })
 
 //POST api/restaurants/:name
-const post = (name, callback) => {
+const postRestaurant = (name, callback) => {
   pool.query(`INSERT INTO restaurants(name) VALUES('${name}')`, (err, res) => {
     if (err) {
       callback(err);
@@ -135,7 +116,7 @@ const post = (name, callback) => {
 
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
-module.exports.post = post;
+module.exports.postRestaurant = postRestaurant;
 
 // //routes
 // app.post("/api/property/", async (req, res) => {

@@ -14,12 +14,12 @@ const pool = new Pool({
 });
 
 // insert into Availability
-for (var tableID = 1; tableID <= 96; tableID++) {
+for (var tableID = 1; tableID <= 94; tableID++) {
   // 7 dates for each restaurant
   for (var i = 0; i < 7; i++) {
     let date = getDate(i);
     let times = randomAvailableTimes();
-    const query = "INSERT INTO availability (table_id, date, available_times) VALUES($1, $2, $3)";
+    const query = "INSERT INTO availability (table_id, date, times) VALUES($1, $2, $3)";
     const values = [tableID, date, times];
     pool
       .query(query, values)

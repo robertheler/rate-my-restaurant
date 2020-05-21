@@ -19,7 +19,7 @@ for (var restaurantID = 1; restaurantID <= 10; restaurantID++) {
   let numberOfTables = 4 + Math.floor(Math.random() * 10);
   for (var table = 0; table < numberOfTables; table++) {
     tableID++;
-    const query = "INSERT INTO tables(table_id, restaurant_id, table_capacity) VALUES($1, $2, $3)";
+    const query = "INSERT INTO tables(id, restaurant_id, capacity) VALUES($1, $2, $3)";
     const values = [tableID, restaurantID, 1 + Math.floor(Math.random() * 10)];
     pool
       .query(query, values)
