@@ -58,117 +58,27 @@
 ```
 
 
-### Update restaurant info
-  * PATCH `/api/restaurant/:id`
-
-**Path Parameters:**
-  * `id` restaurant id
-
-**Success Status Code:** `204`
-
-**Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
-
-```json
-    {
-      "name": "String",
-      "address": "String",
-      "phone": "String",
-      "website": "String",
-      "cost": "Number"
-    }
-```
-
-### Delete table
-  * DELETE `/api/tables/:id`
+### Update availability for given table
+  * PATCH `/api/tables/:id`
 
 **Path Parameters:**
   * `id` table id
 
 **Success Status Code:** `204`
 
-### Add image to restaurant
-  * POST `/api/restaurants/:restaurantId/images`
-
-**Path Parameters:**
-
-  * `restaurantId` restaurant id
-
-**Success Status Code:** `201`
-
-**Request Body**: Expects JSON with the following keys.
+**Request Body**: Expects JSON with dates to be updated (include only dates to be updated)
 
 ```json
     {
-      "user": "String",
-      "image": "image URL",
-      "description": "String",
-      "posted": "YYYY-MM-MM",
-      "googleMap": "String location",
-      "category": "String",
-      "restaurant": "id Number",
-      "cost": "Number"
+      "MM-DD-YYYY": ["TT:TT","TT:TT","TT:TT","TT:TT","TT:TT","TT:TT","TT:TT"],
+      "MM-DD-YYYY": ["TT:TT","TT:TT","TT:TT","TT:TT"]
     }
 ```
 
-
-
-
-
-
-
-
-``json
-{
-  "restaurant_id": "Number",
-  "restaurant_name": "String",
-  "dates": {
-    "07/12/2020": [
-      {
-        "table_id": "Number",
-        "table_capacity": "Number",
-        "available_times": [
-          "08:00", "11:00", "12:00", "13:00","14:00","16:00","17:00","22:00","23:00"
-        ]
-      }
-    ],
-    "08/16/2020": [
-      {
-        "table_id": 45,
-        "table_capacity": 4,
-        "available_times": ["20:00", "21:00"]
-      },
-      {
-        "table_id": 47,
-        "table_capacity": 4,
-        "available_times": ["10:00", "17:00", "21:00", "22:00"]
-      }
-    ]
-  }
-}
-
-```
-
-### Add restaurant
-  * POST `/api/restaurants`
-
-**Success Status Code:** `201`
-
-**Request Body**: Expects JSON with the following keys.
-
-```json
-    {
-      "name": "String",
-      "address": "String",
-      "phone": "String",
-      "website": "String",
-      "googleMap": "String location",
-      "cost": "Number"
-    }
-```
-
-
-### Update restaurant info
-  * PATCH `/api/restaurant/:id`
+### Delete table and associated availability
+  * DELETE `/api/tables/:id`
 
 **Path Parameters:**
-  * `id` restaurant id
+  * `id` table id
+
+**Success Status Code:** `204`
