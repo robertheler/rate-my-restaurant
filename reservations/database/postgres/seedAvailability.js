@@ -14,10 +14,10 @@ const pool = new Pool({
 });
 
 // insert into Availability
-for (var tableID = 1; tableID <= 89; tableID++) {
-  let dates = 1 + Math.floor(Math.random() * 5); // up to 5 dates
-  for (var i = 0; i < dates; i++) {
-    let date = randomDate();
+for (var tableID = 1; tableID <= 96; tableID++) {
+  // 7 dates for each restaurant
+  for (var i = 0; i < 7; i++) {
+    let date = getDate(i);
     let times = randomAvailableTimes();
     const query = "INSERT INTO availability (table_id, date, available_times) VALUES($1, $2, $3)";
     const values = [tableID, date, times];
@@ -30,11 +30,11 @@ for (var tableID = 1; tableID <= 89; tableID++) {
   }
 }
 
-function randomDate() {
+function getDate(offSet) {
   let start = new Date();
-  let end = new Date('2020-08-20T03:24:00');
-  return moment(new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())))
-    .format('MM/DD/YYYY');
+  let end = new Date();
+  end.setDate(start.getDate() + offSet);
+  return moment(end).format('MM/DD/YYYY');
 }
 
 function randomAvailableTimes() {
