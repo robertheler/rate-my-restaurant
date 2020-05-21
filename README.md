@@ -52,7 +52,8 @@
       "phone": "String",
       "website": "String",
       "googleMap": "String location",
-      "cost": "Number"
+      "costRating": "Number",
+      "review": Number
     }
 ```
 
