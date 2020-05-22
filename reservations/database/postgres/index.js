@@ -11,6 +11,18 @@ const pool = new Pool({
 });
 
 //GET api/restaurants/:id
+const getRestaurant = (id, callback) => {
+  pool.query(`SELECT * FROM restaurants WHERE id = ${id}`, (err, res) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, res.rows[0]);
+    }
+  });
+};
+
+
+//GET api/restaurants/:id
 const getAllAvailability = (id, callback) => {
   pool.query(
     `SELECT name FROM restaurants WHERE id = ${id}`,
@@ -131,6 +143,8 @@ const deleteTable = (id, callback) => {
   });
 };
 
+
+module.exports.getRestaurant = getRestaurant;
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
 module.exports.postRestaurant = postRestaurant;
