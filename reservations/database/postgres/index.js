@@ -44,6 +44,7 @@ const postRestaurant = (restaurant, callback) => {
     .query(query, values)
     .then(results => callback(null, results))
     .catch(err => {
+      console.log(err);
       callback(err);
     });
 };
@@ -70,8 +71,28 @@ const postTable = (table, callback) => {
     .query(query, values)
     .then(results => callback(null, results))
     .catch(err => {
+      console.log(err);
       callback(err);
     });
+};
+
+//DELETE api/table/:id
+const deleteTable = (id, callback) => {
+  pool.query(`DELETE FROM availability WHERE table_id = ${id}`, (err, res) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      pool.query(`DELETE FROM tables WHERE id = ${id}`, (err, res) => {
+        if (err) {
+          console.log(err);
+          callback(err);
+        } else {
+          callback(null, res);
+        }
+      });
+    }
+  });
 };
 
 //GET api/availability/:id
@@ -100,6 +121,21 @@ const postAvailability = (availability, callback) => {
       callback(err);
     });
 };
+
+//DELETE api/availability/:id
+const deleteAvailability = (id, callback) => {
+  pool.query(`DELETE FROM availability WHERE id = ${id}`, (err, res) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, res);
+    }
+  });
+};
+
+
+
 
 //GET api/restaurants/:id
 const getAllAvailability = (id, callback) => {
@@ -187,31 +223,18 @@ const getSpecificAvailability = (id, date, size, callback) => {
   });
 };
 
-//DELETE api/table/:id
-const deleteTable = (id, callback) => {
-  pool.query(`DELETE FROM availability WHERE table_id = ${id}`, (err, res) => {
-    if (err) {
-      callback(err);
-    } else {
-      pool.query(`DELETE FROM tables WHERE id = ${id}`, (err, res) => {
-        if (err) {
-          callback(err);
-        } else {
-          callback(null, res);
-        }
-      });
-    }
-  });
-};
 
 module.exports.getRestaurant = getRestaurant;
 module.exports.postRestaurant = postRestaurant;
+
+
 module.exports.getTable = getTable;
 module.exports.postTable = postTable;
+module.exports.deleteTable = deleteTable;
+
 module.exports.getAvailability = getAvailability;
 module.exports.postAvailability = postAvailability;
-
+module.exports.deleteAvailability = deleteAvailability
 
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
-module.exports.deleteTable = deleteTable;
