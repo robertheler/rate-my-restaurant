@@ -9,27 +9,27 @@ DROP TABLE IF EXISTS tables;
 DROP TABLE IF EXISTS restaurants;
 
 CREATE TABLE restaurants(
-   id BIGINT PRIMARY KEY,
-   name VARCHAR(255) NOT NULL,
-   address VARCHAR(255) NOT NULL,
-   phone BIGINT CHECK (phone BETWEEN 1000000000 AND 9999999999) NOT NULL,
-   website VARCHAR(255) NOT NULL,
-   costRating INTEGER CHECK (costRating BETWEEN 1 AND 5) NOT NULL,
-   review NUMERIC CHECK (review BETWEEN 1 and 5) NOT NULL,
-   opens CHAR(5) NOT NULL,
-   closes CHAR (5) NOT NULL,
-   reservationSlot NUMERIC CHECK (reservationSlot BETWEEN 0 and 1) NOT NULL
+   id SERIAL,
+   name VARCHAR(255),
+   address VARCHAR(255),
+   phone BIGINT,
+   website VARCHAR(255),
+   costrating INTEGER,
+   review NUMERIC,
+   opens CHAR(5),
+   closes CHAR (5),
+   reservationslot NUMERIC
 );
 
 CREATE TABLE tables(
-   id BIGINT PRIMARY KEY,
-   restaurant_id BIGINT REFERENCES restaurants(id) NOT NULL,
-   capacity INTEGER CHECK (capacity > 0) NOT NULL
+   id SERIAL,
+   restaurant_id BIGINT,
+   capacity INTEGER
 );
 
 CREATE TABLE availability(
-   id BIGINT PRIMARY KEY,
-   table_id BIGINT REFERENCES tables(id),
-   date DATE NOT NULL,
-   times CHAR(5) [] NOT NULL
+   id SERIAL,
+   table_id BIGINT,
+   date DATE,
+   times CHAR(5) []
 );

@@ -14,12 +14,61 @@ const pool = new Pool({
 const getRestaurant = (id, callback) => {
   pool.query(`SELECT * FROM restaurants WHERE id = ${id}`, (err, res) => {
     if (err) {
+      console.log(err);
       callback(err);
     } else {
       callback(null, res.rows[0]);
     }
   });
 };
+
+//POST api/restaurants/
+const postRestaurant = (restaurant, callback) => {
+ query = `INSERT INTO
+            restaurants(name, address, phone, website, costrating, review, opens, closes, reservationslot)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+
+  values = [
+    restaurant.name,
+    restaurant.address,
+    restaurant.phone,
+    restaurant.website,
+    restaurant.costrating,
+    restaurant.review,
+    restaurant.opens,
+    restaurant.closes,
+    restaurant.reservationslot
+  ];
+
+  pool
+    .query(query, values)
+    .then(results => callback(null, results))
+    .catch(err => {
+      callback(err)
+    });
+};
+
+//GET api/tables/:id
+const getTable = (id, callback) => {
+  pool.query(`SELECT * FROM tables WHERE id = ${id}`, (err, res) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, res.rows[0]);
+    }
+  });
+};
+
+
+
+
+
+
+
+
+
+
 
 
 //GET api/restaurants/:id
@@ -64,8 +113,8 @@ const getAllAvailability = (id, callback) => {
               callback(err, result);
             }
           }
-        );
-      }
+          );
+        }
     }
   );
 };
@@ -115,16 +164,6 @@ const getSpecificAvailability = (id, date, size, callback) => {
 };
 
 
-//POST api/restaurants/:name
-const postRestaurant = (restaurant, callback) => {
-  pool.query(`INSERT INTO restaurants VALUES(DEFAULT, '${restaurant.name}')`, (err, res) => {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, res);
-    }
-  });
-};
 
 //DELETE api/table/:id
 const deleteTable = (id, callback) => {
@@ -145,7 +184,12 @@ const deleteTable = (id, callback) => {
 
 
 module.exports.getRestaurant = getRestaurant;
+module.exports.postRestaurant = postRestaurant;
+module.exports.getTable = getTable;
+//module.exports.postTable = postTable;
+
+
+
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
-module.exports.postRestaurant = postRestaurant;
 module.exports.deleteTable = deleteTable;
