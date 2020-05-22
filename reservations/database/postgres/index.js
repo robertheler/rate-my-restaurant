@@ -60,6 +60,22 @@ const getTable = (id, callback) => {
   });
 };
 
+//POST api/tables/
+const postTable = (table, callback) => {
+  query = `INSERT INTO tables(restaurant_id, capacity) VALUES($1, $2)`;
+
+   values = [
+     table.restaurant_id,
+     table.capacity,
+   ];
+
+   pool
+     .query(query, values)
+     .then(results => callback(null, results))
+     .catch(err => {
+       callback(err)
+     });
+ };
 
 
 
@@ -186,7 +202,7 @@ const deleteTable = (id, callback) => {
 module.exports.getRestaurant = getRestaurant;
 module.exports.postRestaurant = postRestaurant;
 module.exports.getTable = getTable;
-//module.exports.postTable = postTable;
+module.exports.postTable = postTable;
 
 
 
