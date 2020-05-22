@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   name: String,
-  address: JSON,
+  address: String,
   phone: {
     type: Number,
     min: 1000000000,
@@ -24,6 +24,15 @@ const schema = new mongoose.Schema({
     min: 1,
     max: 5
   },
+  opens: {
+    type: String,
+    maxLength: 5
+  },
+  closes: {
+    type: String,
+    maxLength: 5
+  },
+  reservationSlot: Number,
   tables: [
     {
       id: {
@@ -37,6 +46,7 @@ const schema = new mongoose.Schema({
       },
       dates: [
         {
+          id: Number,
           date: Date,
           times: [String]
         }

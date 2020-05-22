@@ -12,10 +12,13 @@ CREATE TABLE restaurants(
    id SERIAL PRIMARY KEY,
    name VARCHAR(255) NOT NULL,
    address VARCHAR(255) NOT NULL,
-   phone VARCHAR(255) NOT NULL,
+   phone INTEGER CHECK (phone BETWEEN 1000000000 AND 9999999999) NOT NULL,
    website VARCHAR(255) NOT NULL,
-   costRating INTEGER CHECK (cost BETWEEN 1 AND 5),
-   review NUMBER CHECK (review BETWEEN 1 and 5)
+   costRating INTEGER CHECK (costRating BETWEEN 1 AND 5) NOT NULL,
+   review NUMERIC CHECK (review BETWEEN 1 and 5) NOT NULL,
+   opens CHAR(5) NOT NULL,
+   closes CHAR (5) NOT NULL,
+   reservationSlot NUMERIC CHECK (reservationSlot BETWEEN 0 and 1) NOT NULL
 );
 
 CREATE TABLE tables(
