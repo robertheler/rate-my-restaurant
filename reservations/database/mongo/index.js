@@ -3,8 +3,14 @@ const mongoose = require('mongoose');
 const seeder = require('./seeder.js');
 const schema = require('./schema');
 
-//mongoose.connect('mongodb://172.17.0.2:27017/reservations', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb://localhost/reservations', { useNewUrlParser: true, useUnifiedTopology: true });
+let options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+}
+//mongoose.connect('mongodb://172.17.0.2:27017/reservations', options);
+mongoose.connect('mongodb://localhost/restaurants', options);
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -13,7 +19,7 @@ db.once('open', () => {
 });
 
 const get = (id, callback) => {
-  schema.ReservationSchedule.findOne({ id }, (err, schedule) => {
+  schema.Restaurants.findOne({ id }, (err, schedule) => {
     if (err) {
       console.log(err);
       callback(err);

@@ -14,9 +14,8 @@ CREATE TABLE restaurants(
    address VARCHAR(255) NOT NULL,
    phone VARCHAR(255) NOT NULL,
    website VARCHAR(255) NOT NULL,
-   googleMaps VARCHAR(255) NOT NULL,
    costRating INTEGER CHECK (cost BETWEEN 1 AND 5),
-   review NUMBER CHECK (review BETWEEN 0 and 5)
+   review NUMBER CHECK (review BETWEEN 1 and 5)
 );
 
 CREATE TABLE tables(
