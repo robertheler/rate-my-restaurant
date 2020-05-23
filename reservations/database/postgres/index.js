@@ -1,6 +1,7 @@
 const { Pool, Client } = require("pg");
 const moment = require("moment"); // require
 moment().format();
+const each = require('async/each');
 
 const pool = new Pool({
   user: "postgres",
@@ -54,19 +55,22 @@ const deleteRestaurant = (id, callback) => {
   pool.query(
     `DELETE FROM availability
               WHERE table_id IN (
-              SELECT id FROM tables WHERE restaurant_id = ${id})`, (err, res) => {
+              SELECT id FROM tables WHERE restaurant_id = ${id})`,
+    (err, res) => {
       if (err) {
         console.log(err);
         callback(err);
       } else {
         pool.query(
-          `DELETE FROM tables WHERE restaurant_id = ${id}`, (err, res) => {
+          `DELETE FROM tables WHERE restaurant_id = ${id}`,
+          (err, res) => {
             if (err) {
               console.log(err);
               callback(err);
             } else {
               pool.query(
-                `DELETE FROM restaurants WHERE id = ${id}`,(err, res) => {
+                `DELETE FROM restaurants WHERE id = ${id}`,
+                (err, res) => {
                   if (err) {
                     console.log(err);
                     callback(err);
@@ -81,6 +85,28 @@ const deleteRestaurant = (id, callback) => {
       }
     }
   );
+};
+
+//PATCH api/restaurants/:id
+const patchRestaurant = (id, updates, callback) => {
+  each(Object.keys(updates),
+    function(update, resolve) {
+      pool.query(
+        `UPDATE restaurants SET ${update} = $1 WHERE id = $2`,
+        [updates[update], id],
+        (err, res) => {
+          if (err) {
+            console.log(err);
+            resolve(err);
+          } else {
+            resolve();
+          }
+        })
+    },
+    function(err) {
+      callback()
+    }
+  )
 };
 
 //GET api/tables/:id
@@ -129,6 +155,28 @@ const deleteTable = (id, callback) => {
   });
 };
 
+//PATCH api/tables/:id
+const patchTable = (id, updates, callback) => {
+  each(Object.keys(updates),
+    function(update, resolve) {
+      pool.query(
+        `UPDATE tables SET ${update} = $1 WHERE id = $2`,
+        [updates[update], id],
+        (err, res) => {
+          if (err) {
+            console.log(err);
+            resolve(err);
+          } else {
+            resolve();
+          }
+        })
+    },
+    function(err) {
+      callback()
+    }
+  )
+};
+
 //GET api/availability/:id
 const getAvailability = (id, callback) => {
   pool.query(`SELECT * FROM availability WHERE id = ${id}`, (err, res) => {
@@ -166,6 +214,28 @@ const deleteAvailability = (id, callback) => {
       callback(null, res);
     }
   });
+};
+
+//PATCH api/availability/:id
+const patchAvailability = (id, updates, callback) => {
+  each(Object.keys(updates),
+    function(update, resolve) {
+      pool.query(
+        `UPDATE availability SET ${update} = $1 WHERE id = $2`,
+        [updates[update], id],
+        (err, res) => {
+          if (err) {
+            console.log(err);
+            resolve(err);
+          } else {
+            resolve();
+          }
+        })
+    },
+    function(err) {
+      callback()
+    }
+  )
 };
 
 //GET api/restaurants/:id
@@ -257,14 +327,17 @@ const getSpecificAvailability = (id, date, size, callback) => {
 module.exports.getRestaurant = getRestaurant;
 module.exports.postRestaurant = postRestaurant;
 module.exports.deleteRestaurant = deleteRestaurant;
+module.exports.patchRestaurant = patchRestaurant;
 
 module.exports.getTable = getTable;
 module.exports.postTable = postTable;
 module.exports.deleteTable = deleteTable;
+module.exports.patchTable = patchTable;
 
 module.exports.getAvailability = getAvailability;
 module.exports.postAvailability = postAvailability;
 module.exports.deleteAvailability = deleteAvailability;
+module.exports.patchAvailability = patchAvailability;
 
-module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
+module.exports.getSpecificAvailability = getSpecificAvailability;
