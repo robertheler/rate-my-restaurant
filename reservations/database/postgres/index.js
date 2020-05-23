@@ -49,6 +49,40 @@ const postRestaurant = (restaurant, callback) => {
     });
 };
 
+//DELETE api/restaurants/:id
+const deleteRestaurant = (id, callback) => {
+  pool.query(
+    `DELETE FROM availability
+              WHERE table_id IN (
+              SELECT id FROM tables WHERE restaurant_id = ${id})`, (err, res) => {
+      if (err) {
+        console.log(err);
+        callback(err);
+      } else {
+        pool.query(
+          `DELETE FROM tables WHERE restaurant_id = ${id}`, (err, res) => {
+            if (err) {
+              console.log(err);
+              callback(err);
+            } else {
+              pool.query(
+                `DELETE FROM restaurants WHERE id = ${id}`,(err, res) => {
+                  if (err) {
+                    console.log(err);
+                    callback(err);
+                  } else {
+                    callback(null, res);
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    }
+  );
+};
+
 //GET api/tables/:id
 const getTable = (id, callback) => {
   pool.query(`SELECT * FROM tables WHERE id = ${id}`, (err, res) => {
@@ -133,9 +167,6 @@ const deleteAvailability = (id, callback) => {
     }
   });
 };
-
-
-
 
 //GET api/restaurants/:id
 const getAllAvailability = (id, callback) => {
@@ -223,10 +254,9 @@ const getSpecificAvailability = (id, date, size, callback) => {
   });
 };
 
-
 module.exports.getRestaurant = getRestaurant;
 module.exports.postRestaurant = postRestaurant;
-
+module.exports.deleteRestaurant = deleteRestaurant;
 
 module.exports.getTable = getTable;
 module.exports.postTable = postTable;
@@ -234,7 +264,7 @@ module.exports.deleteTable = deleteTable;
 
 module.exports.getAvailability = getAvailability;
 module.exports.postAvailability = postAvailability;
-module.exports.deleteAvailability = deleteAvailability
+module.exports.deleteAvailability = deleteAvailability;
 
 module.exports.getSpecificAvailability = getSpecificAvailability;
 module.exports.getAllAvailability = getAllAvailability;
