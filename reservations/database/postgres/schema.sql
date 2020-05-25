@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS ratemyrestaurant;
+DROP DATABASE IF EXISTS restaurants;
 
-CREATE DATABASE ratemyrestaurant;
+CREATE DATABASE restaurants;
 
-\c ratemyrestaurant;
+\c restaurants;
 
 DROP TABLE IF EXISTS availability;
 DROP TABLE IF EXISTS tables;

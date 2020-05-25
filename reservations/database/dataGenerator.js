@@ -11,7 +11,7 @@ let data = [];
 let totalTables = 0;
 let totalDates = 0;
 let totalRestaurants = 0;
-for (var restaurant = 1; restaurant <= 10; restaurant++) {
+for (var restaurant = 1; restaurant <= 1000; restaurant++) {
   totalRestaurants++;
   let id = totalRestaurants;
   let name = generate.lorem.word() + " " + generate.lorem.word();
@@ -66,7 +66,7 @@ for (var restaurant = 1; restaurant <= 10; restaurant++) {
 
 fs.writeFileSync(
   "data.json",
-  JSON.stringify(data, null,2),
+  JSON.stringify(data, null),
   (err) => {
     if (err) {
       console.log('Error');

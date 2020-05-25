@@ -8,7 +8,11 @@ const pool = new Pool({
   host: "localhost", // change to databse for deplying
   database: "ratemyrestaurant",
   password: "postgres",
-  port: 5432
+  port: 5432,
+  prepared_statements: true,
+  reconnect: true,
+  prepare_threshold: 0,
+  server_prepare_mode: "transaction"
 });
 
 //GET api/restaurants/:id

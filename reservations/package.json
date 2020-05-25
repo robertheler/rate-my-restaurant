@@ -11,9 +11,12 @@
     "start-dev": "nodemon /server/index.js",
     "compile": "webpack -d --watch",
     "snapshot-all": "jest --updateSnapshot",
-    "seed-postgres": "psql -U postgres < ./database/postgres/schema.sql"
+    "load-postgres": "psql -U postgres < ./database/postgres/schema.sql",
+    "seed-postgres": "node --max-old-space-size=8192 ./database/postgres/seed.js",
+    "seed-mongo": "node ./database/mongo/seed.js"
   },
   "dependencies": {
+    "async": "^3.2.0",
     "cors": "^2.8.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -25,6 +28,7 @@
     "moment": "^2.26.0",
     "mongoose": "^5.9.11",
     "pg": "^8.2.1",
+    "pg-promise": "^10.5.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0"

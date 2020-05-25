@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
-const seeder = require('./seeder.js');
 const schema = require('./schema');
 
 let options = {
@@ -15,10 +14,11 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to database!');
-  seeder.seed();
+  //seeder.seed();
+  mongoose.connection.db.dropDatabase();
 });
 
-const get = (id, callback) => {
+function get (id, callback) {
   schema.Restaurants.findOne({ id }, (err, schedule) => {
     if (err) {
       console.log(err);
@@ -29,4 +29,25 @@ const get = (id, callback) => {
   });
 };
 
+// findAll retrieves all shoes
+function findAll(callback) {
+  schema.Restaurants.find({}, callback);
+}
+
+// findOne will retrieve the shoe associated with the given id
+function findOne(id, callback) {
+  mongoose.connect('mongodb://mongo:27017/adidas', options, () => {
+    schema.Restaurants.find({id: id}, callback)
+  })
+}
+
+// insertOne inserts a shoe into the db
+function insertOne(shoe, callback) {
+  schema.Restaurants.create(shoe, callback);
+}
+
+
 module.exports.get = get;
+module.exports.findOne = findOne;
+module.exports.findAll = findAll;
+module.exports.insertOne = insertOne;
