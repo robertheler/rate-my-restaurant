@@ -6,8 +6,8 @@ const each = require("async/each");
 const pool = new Pool({
   user: "postgres",
   host: "localhost", // change to databse for deplying
-  database: "restaurants",
-  password: "postgres",
+  database: "ratemyrestaurant",
+  password: "",
   port: 5432,
   prepared_statements: true,
   reconnect: true,
@@ -15,7 +15,6 @@ const pool = new Pool({
   server_prepare_mode: "transaction"
 });
 
-//CREATE INDEX index_id ON availability (date, table_id);
 //GET api/restaurants/:id
 const getRestaurant = (id, callback) => {
   pool.query(`SELECT * FROM restaurants WHERE id = ${id}`, (err, res) => {
