@@ -19,9 +19,7 @@ db.once('open', () => {
 });
 
 function getRestaurant (id, callback) {
-  schema.Restaurants.find({id: id})
-  //.explain('executionStats')
-  .exec(callback);
+  schema.Restaurants.find({id: id}, callback)
 };
 
 function postRestaurant (restaurant, callback) {

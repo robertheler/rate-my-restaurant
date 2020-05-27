@@ -8,12 +8,11 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start-dev": "nodemon /server/index.js",
+    "start": "nodemon /server/index.js",
     "compile": "webpack -d --watch",
     "snapshot-all": "jest --updateSnapshot",
     "load-postgres": "psql -U postgres < ./database/postgres/schema.sql",
-    "seed-postgres": "node --max-old-space-size=8192 ./database/postgres/seed.js",
-    "seed-mongo": "node ./database/mongo/seed.js"
+    "seed-postgres": "node --max-old-space-size=8192 ./database/postgres/seed.js"
   },
   "dependencies": {
     "async": "^3.2.0",
@@ -26,6 +25,7 @@
     "jquery": "^3.5.0",
     "lorem-ipsum": "^2.0.3",
     "moment": "^2.26.0",
+    "mongo-seeding": "^3.4.1",
     "mongoose": "^5.9.11",
     "pg": "^8.2.1",
     "pg-promise": "^10.5.6",

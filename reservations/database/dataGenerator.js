@@ -11,7 +11,7 @@ let data = [];
 let totalTables = 0;
 let totalDates = 0;
 let totalRestaurants = 0;
-for (var restaurant = 1; restaurant <= 1000; restaurant++) {
+for (var restaurant = 1; restaurant <= 10; restaurant++) {
   totalRestaurants++;
   let id = totalRestaurants;
   let name = generate.lorem.word() + " " + generate.lorem.word();
