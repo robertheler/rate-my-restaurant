@@ -60,3 +60,9 @@ CREATE INDEX ON availability(id);
 CREATE INDEX ON availability(table_id);
 CREATE INDEX ON availability(date);
 CREATE INDEX ON availability(times);
+
+ALTER TABLE availability
+ADD CONSTRAINT availability_foreign FOREIGN KEY (table_id) REFERENCES tables (id);
+
+ALTER TABLE tables
+ADD CONSTRAINT tables_foreign FOREIGN KEY (restaurant_id) REFERENCES restaurants (id);
