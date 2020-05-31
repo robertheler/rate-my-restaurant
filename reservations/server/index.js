@@ -30,6 +30,7 @@ app.get('/api/restaurants/:id', (req, res) => {
   db.getRestaurant(req.params.id, (err, results) => {
     if (err) {
       res.status(404).send(err);
+      NewRelic.Api.Agent.NewRelic.NoticeError(err);
     } else {
       res.status(200).send(results);
     }

@@ -1,31 +1,46 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { max } from 'moment';
-const lineReader = require('line-reader');
+import http from "k6/http";
+import { check, sleep } from "k6";
+import { Counter } from "k6/metrics";
+//const moment = require("https://momentjs.com/downloads/moment.js");
+//moment().format();
 
+// A simple counter for http requests
+export const requests = new Counter("http_reqs");
 
 export let options = {
   ext: {
     loadimpact: {
       projectID: 3493976,
       // Test runs with the same name groups test runs together
-      name: "Stress Test"
+      name: "--vus 50 --duration 60s"
     }
   }
-}
-
-let maxRequests  = 10;
+  // stages: [
+  //   { duration: '3m', target: 1000 }, // beyond the breaking point
+  //   { duration: '2m', target: 1100 }, // beyond the breaking point
+  //   { duration: '2m', target: 1200 }, // beyond the breaking point
+  //   { duration: '2m', target: 1300 }, // beyond the breaking point
+  //   { duration: '2m', target: 2000 }, // beyond the breaking point
+  // ]
+};
 
 export default function() {
-  let i = 0;
-  lineReader.eachLine('/path/to/file', function(line) {
-    i++;
-    console.log(line);
-    http.get(line);
-    sleep(1);
+  let id = Math.floor(Math.random() * 1000000);
+  let date = getDate(Math.floor(Math.random() * 100));
+  let size = Math.floor(Math.random() * 12);
 
-    if (i === maxRequests) {
-      break
-    }
+  let res = http.get(`http://localhost:3001/api/restaurants/${id}/${date}/${size}`);
+  //let res = http.get(`http://localhost:3001/api/restaurants/${id}`);
+  check(res, {
+    "Error Rate": r => r.status !== 200,
+    "Transaction time under 2000ms": r => r.timings.duration < 2000
   });
+
+  sleep(1);
+}
+function getDate(offSet) {
+  let start = new Date();
+  let end = new Date();
+  end.setDate(start.getDate() + offSet);
+  return moment(end).format("MM-DD-YYYY");
 }
