@@ -1,2 +1,4 @@
 node_modules
-reservations/database/data.json
+reservations/database/data
+reservations/newrelic.js
+reservations/server/newrelic.js

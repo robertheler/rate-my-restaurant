@@ -20,6 +20,7 @@ const getRestaurant = (id, callback) => {
   pool.query(`SELECT * FROM restaurants WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log(err);
+      NewRelic.Api.Agent.NewRelic.NoticeError(err);
       callback(err);
     } else {
       callback(null, res.rows[0]);
@@ -294,12 +295,12 @@ const getAllAvailability = (id, callback) => {
 
 //GET /api/restaurants/:id/:date/:size
 const getSpecificAvailability = (id, date, size, callback) => {
-  pool.query(`SELECT name FROM restaurants WHERE id = ${id}`, (err, name) => {
-  if (err) {
-        callback(err);
-      } else if (name.rows.length === 0) {
-        callback(null, {});
-      } else {
+  // pool.query(`SELECT name FROM restaurants WHERE id = ${id}`, (err, name) => {
+  // if (err) {
+  //       callback(err);
+  //     } else if (name.rows.length === 0) {
+  //       callback(null, {});
+  //     } else {
         pool.query(
           // `SELECT *
           //   FROM availability
@@ -321,7 +322,7 @@ const getSpecificAvailability = (id, date, size, callback) => {
             } else {
               let result = {
                 id: id,
-                name: name.rows[0].name,
+                //name: name.rows[0].name,
                 date: date,
                 tables: []
               };
@@ -336,8 +337,8 @@ const getSpecificAvailability = (id, date, size, callback) => {
             }
           }
         );
-      }
-    });
+
+    // });
 };
 
 module.exports.pool = pool;
