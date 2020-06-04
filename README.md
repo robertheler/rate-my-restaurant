@@ -1,21 +1,41 @@
 # RateMyRestaurant
-## Verically and Horizontally Scalabale Using AWS EC2
-### Tested Architectures
+
+## Table of Contents
+
+* [Verically and horizontally scalabale on AWS](#verically-and-horizontally-scalabale-on-aws)
+  * [Performance of various EC2 architectures](#performance-of-various-ec2-architectures)
+  * [Sample Loader.io output](#sample-loader_io-output)
+* [Optimized Postgres database with over 10 million records](#query-optimized-postgres-database-with-over-10-million-records)
+eact Calendar & Booking Component
+* [React calendar & booking component](#react-calendar-and-booking-component)
+* [API](#server-api)
+  * [GET](#get-restaurant-avaialability-for-given-date-and-party-size)
+  * [POST](#add-restaurant)
+  * [PATCH](#update-availability-for-given-table)
+  * [DELETE](#delete-table-and-associated-availability)
+* [Getting started](#getting-started)
+  * [Environment setup](#environment-setup)
+  * [Generate data and seed the database](#generate-data-and-seed-the-database)
+    
+    
+## Verically and Horizontally Scalabale on AWS
+### Performance of Various EC2 Architectures
 <table><thead><tr><th>App Instance</th><th># App Instances</th><th>Nginx Instance</th><th>Postgres Instance</th><th>vCPUs</th><th>Memory (GB)</th><th>Max RPS</th><th>1000 RPS</th><th>1500 RPS</th><th>2000 RPS</th><th>3000 RPS</th><th>Max RPS/ App Instance</th><th>Average Time (ms)</th><th>Error (%)</th><th>Error (%)</th></tr></thead><tbody><tr><td>t3a.2xlarge</td><td>6</td><td>t3a.2xlarge</td><td>t3a.2xlarge</td><td>64</td><td>256</td><td>10000</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>1666.666667</td><td>1349</td><td>0.1</td><td>0.1</td></tr><tr><td>t3a.2xlarge</td><td>5</td><td>m5d.4xlarge</td><td>t3a.2xlarge</td><td>64</td><td>256</td><td>5000</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>1000</td><td>231</td><td>0</td><td>0</td></tr><tr><td>t3a.2xlarge</td><td>5</td><td>t3a.2xlarge</td><td>t3a.2xlarge</td><td>56</td><td>224</td><td>4500</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>900</td><td>400</td><td>1.4</td><td>1.4</td></tr><tr><td>t3a.2xlarge</td><td>3</td><td>t3a.2xlarge</td><td>t3a.2xlarge</td><td>40</td><td>160</td><td>3000</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>1000</td><td>2070</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>15</td><td>t2.micro</td><td>t2.micro</td><td>17</td><td>17</td><td>2000</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>133.3333333</td><td>7</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>3</td><td>t3a.2xlarge</td><td>t3a.2xlarge</td><td>19</td><td>131</td><td>2000</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>666.6666667</td><td>1978</td><td>0.3</td><td>0.3</td></tr><tr><td>t3a.2xlarge</td><td>3</td><td>t3a.2xlarge</td><td>t2.micro</td><td>33</td><td>257</td><td>1700</td><td>✓</td><td>✓</td><td></td><td></td><td>566.6666667</td><td>320</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>3</td><td>t3a.2xlarge</td><td>t2.micro</td><td>12</td><td>68</td><td>1600</td><td>✓</td><td>✓</td><td></td><td></td><td>533.3333333</td><td>106</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>10</td><td>t2.micro</td><td>t2.micro</td><td>12</td><td>12</td><td>1300</td><td>✓</td><td></td><td></td><td></td><td>130</td><td>5</td><td>0</td><td>0</td></tr><tr><td>t3a.2xlarge</td><td>3</td><td>t2.micro</td><td>t3a.2xlarge</td><td>33</td><td>257</td><td>1000</td><td>✓</td><td></td><td></td><td></td><td>333.3333333</td><td>6</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>3</td><td>t2.micro</td><td>t2.micro</td><td>5</td><td>5</td><td>600</td><td></td><td></td><td></td><td></td><td>200</td><td>66</td><td>0</td><td>0</td></tr><tr><td>t3a.2xlarge</td><td>3</td><td>t2.micro</td><td>t2.micro</td><td>26</td><td>194</td><td>500</td><td></td><td></td><td></td><td></td><td>166.6666667</td><td>38</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>3</td><td>t2.micro</td><td>t3a.2xlarge</td><td>12</td><td>68</td><td>500</td><td></td><td></td><td></td><td></td><td>166.6666667</td><td>3</td><td>0</td><td>0</td></tr><tr><td>t2.micro</td><td>1</td><td></td><td>t2.micro</td><td>2</td><td>2</td><td>400</td><td></td><td></td><td></td><td></td><td>400</td><td>58</td><td>0.2</td><td>0.2</td></tr></tbody></table>
 
-### Sample loader.io Output for 2500 Clients/Second Stress Test (11ms Response Time) 
+### Sample Loader_io Output 
+for 2500 Clients/Second Stress Test (11ms Response Time) 
 ![Sample Loader.io](/demos/2500vsu.png)
 
-## Query-Optimized Postgres Database With Over 10,000,0000 Records
+## Query-Optimized Postgres Database With Over 10 Million Records
 ![Sample Query](/demos/query.png)
 
-## React Calendar & Booking Component
+## React Calendar and Booking Component
 by Kiefer Ragay https://github.com/patriot898
 
 ![Sample Component](/demos/component.gif)
 
 ## Server API
-### Routes (See Examples Below)
+### Routes
 GET
 `/api/restaurants/:id`
 `/api/tables/:id`
@@ -161,7 +181,7 @@ npm install
 npm run compile
 npm start
 ```
-### Generate Data and Seeed the Database
+### Generate Data and Seed the Database
 ```sh
  npm run generate-restaurants
  npm run generate-tables
