@@ -15,7 +15,6 @@ npm start
   npm run generate-availability
   npm run seed-postgres
 ``
-
 ## Server API
 
 ### Get restaurant avaialability for given date and party size
