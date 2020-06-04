@@ -1,5 +1,6 @@
 # RateMyRestaurant
-
+Full stack restaurant rating app with React/Styled Components front end and Express/Postgres back end.
+<br>
 ## Table of Contents
 
 * [Verically and horizontally scalabale on AWS](#verically-and-horizontally-scalabale-on-aws)
