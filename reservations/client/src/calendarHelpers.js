@@ -1,36 +1,48 @@
 /* eslint-disable no-mixed-operators */
 const calendarHelpers = {};
 
-calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+calendarHelpers.months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
 
-calendarHelpers.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+calendarHelpers.weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-calendarHelpers.getLatestMonth = (monthNumber) => {
+calendarHelpers.getLatestMonth = monthNumber => {
   if (monthNumber + 3 > 11) {
     return monthNumber + 3 - 12;
   }
   return monthNumber + 3;
 };
 
-calendarHelpers.firstDayOfMonth = (year, monthNumber) => (
-  calendarHelpers.weekdays[new Date(year, monthNumber, 1).getDay()]
-);
+calendarHelpers.firstDayOfMonth = (year, monthNumber) =>
+  calendarHelpers.weekdays[new Date(year, monthNumber, 1).getDay()];
 
-calendarHelpers.lastDayIndexOfMonth = (year, monthNumber) => (
-  new Date(year, monthNumber, calendarHelpers.lastDateOfMonth(year, monthNumber)).getDay()
-);
+calendarHelpers.lastDayIndexOfMonth = (year, monthNumber) =>
+  new Date(
+    year,
+    monthNumber,
+    calendarHelpers.lastDateOfMonth(year, monthNumber)
+  ).getDay();
 
-calendarHelpers.lastDateOfMonth = (year, monthNumber) => (
-  32 - new Date(year, monthNumber, 32).getDate()
-);
+calendarHelpers.lastDateOfMonth = (year, monthNumber) =>
+  32 - new Date(year, monthNumber, 32).getDate();
 
-calendarHelpers.monthNameToNum = (monthName) => (
-  calendarHelpers.months.indexOf(monthName)
-);
+calendarHelpers.monthNameToNum = monthName =>
+  calendarHelpers.months.indexOf(monthName);
 
-calendarHelpers.monthNumToName = (monthNumber) => (
-  calendarHelpers.months[monthNumber]
-);
+calendarHelpers.monthNumToName = monthNumber =>
+  calendarHelpers.months[monthNumber];
 
 calendarHelpers.blankDaysBefore = (year, monthNumber) => {
   const blanksArray = [];
@@ -41,11 +53,21 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
     previousMonthNumber = 11;
     previousMonthsYear -= 1;
   }
-  const lastDayOfPreviousMonth = calendarHelpers
-    .lastDateOfMonth(previousMonthsYear, previousMonthNumber);
+  const lastDayOfPreviousMonth = calendarHelpers.lastDateOfMonth(
+    previousMonthsYear,
+    previousMonthNumber
+  );
 
-  for (let i = lastDayOfPreviousMonth - (numOfBlanks - 1); i <= lastDayOfPreviousMonth; i += 1) {
-    const id = calendarHelpers.createId(previousMonthsYear, previousMonthNumber, i);
+  for (
+    let i = lastDayOfPreviousMonth - (numOfBlanks - 1);
+    i <= lastDayOfPreviousMonth;
+    i += 1
+  ) {
+    const id = calendarHelpers.createId(
+      previousMonthsYear,
+      previousMonthNumber,
+      i
+    );
     blanksArray.push(id);
   }
   return blanksArray;
@@ -118,37 +140,36 @@ calendarHelpers.allWeekRows = (year, monthNumber) => {
   return allWeeks;
 };
 
-calendarHelpers.createId = (year, monthNumber, day) => (
-  calendarHelpers.roundDecimal((year + monthNumber * 0.01 + day * 0.0001), 4)
-);
+calendarHelpers.createId = (year, monthNumber, day) =>
+  calendarHelpers.roundDecimal(year + monthNumber * 0.01 + day * 0.0001, 4);
 
-calendarHelpers.idToLongDate = (id) => {
+calendarHelpers.idToLongDate = id => {
   const year = Math.floor(id);
   const monthNum = calendarHelpers.monthFromId(id);
   const monthName = calendarHelpers.monthNumToName(monthNum);
   const day = calendarHelpers.dayNumFromId(id);
-  const dayOfWeek = calendarHelpers.weekdays[new Date(year, monthNum, day).getDay()];
-  return (`${dayOfWeek}, ${monthName} ${day}`);
+  const dayOfWeek =
+    calendarHelpers.weekdays[new Date(year, monthNum, day).getDay()];
+  return `${dayOfWeek}, ${monthName} ${day}`;
 };
 
-calendarHelpers.weekdayFromId = (id) => {
+calendarHelpers.weekdayFromId = id => {
   const year = Math.floor(id);
   const monthNum = calendarHelpers.monthFromId(id);
   const day = calendarHelpers.dayNumFromId(id);
   return new Date(year, monthNum, day).getDay();
 };
 
-calendarHelpers.monthFromId = (id) => (
-  Math.round(calendarHelpers.roundDecimal(parseFloat(id) % 1, 2) * 100)
-);
+calendarHelpers.monthFromId = id =>
+  Math.round(calendarHelpers.roundDecimal(parseFloat(id) % 1, 2) * 100);
 
-calendarHelpers.dayNumFromId = (id) => (
-  Math.round(calendarHelpers.roundDecimal(((parseFloat(id) % 1) % 0.01 * 10000), 4))
-);
+calendarHelpers.dayNumFromId = id =>
+  Math.round(
+    calendarHelpers.roundDecimal(((parseFloat(id) % 1) % 0.01) * 10000, 4)
+  );
 
-calendarHelpers.roundDecimal = (value, decimals) => (
+calendarHelpers.roundDecimal = (value, decimals) =>
   // eslint-disable-next-line prefer-template
-  Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
-);
+  Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 
 export default calendarHelpers;

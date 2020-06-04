@@ -10,7 +10,7 @@ let numberDaysPerTable = 100;
 let availability = [];
 let totalDates = 0;
 for (let i = 50001; i <= tables; i++) {
-//for (let i = 1; i <= 50000; i++) {
+  //for (let i = 1; i <= 50000; i++) {
   for (let j = 0; j < numberDaysPerTable; j++) {
     totalDates++;
     let date = getDate(j);
@@ -22,7 +22,6 @@ for (let i = 50001; i <= tables; i++) {
   }
   if (i % 10000 === 0) console.log(i);
 }
-
 
 const csvWriterAvailability = createCsvWriter({
   path: "database/data/availability2.csv",

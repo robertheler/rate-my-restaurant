@@ -26,12 +26,12 @@ AND tables.capacity >= $2
 AND availability.date::date = $3`
   )
   .then(() => {
-let totalExecutionTime = 0;
-let totalPlanningTime = 0;
-for (var i = 0; i < 10; i++) {
-  let id = generate.random.number(0, 9999);
-  let date = getDate(generate.random.number(0, 100));
-  let partySize = generate.random.number(1, 12);
+    let totalExecutionTime = 0;
+    let totalPlanningTime = 0;
+    for (var i = 0; i < 10; i++) {
+      let id = generate.random.number(0, 9999);
+      let date = getDate(generate.random.number(0, 100));
+      let partySize = generate.random.number(1, 12);
       pool.query(
         `EXPLAIN ANALYZE
       EXECUTE selection (${id}, ${partySize}, '${date}')`,
@@ -39,7 +39,6 @@ for (var i = 0; i < 10; i++) {
           if (err) {
             console.log(err);
           } else {
-
             let executionTime = res.rows[res.rows.length - 1]["QUERY PLAN"];
             //console.log(executionTime);
             let start = executionTime.indexOf(":") + 2;

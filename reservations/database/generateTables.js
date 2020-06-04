@@ -29,5 +29,4 @@ csvWriterTables
   .writeRecords(tables)
   .then(() => console.log("The Table CSV file was written successfully"));
 
-
 console.log(`Generated ${totalTables} tables!`);

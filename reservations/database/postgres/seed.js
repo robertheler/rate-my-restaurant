@@ -31,6 +31,8 @@ const pool = new Pool({
 
 let start = Date.now();
 let alreadyAdded = 4000;
+
+
 seedRestaurants();
 function seedRestaurants() {
   let query, values;
@@ -71,7 +73,7 @@ function seedRestaurants() {
           seedTables(results.rows[0].id, restaurant.tables);
         })
         .catch(e => console.error(e.stack));
-    }, 500 * (i));
+    }, 500 * i);
     //break
   }
 }
@@ -106,7 +108,10 @@ function seedAvailability(tableID, dates) {
     db.none(insertion, [tableID, date.date, date.times])
       .then(() => {
         if (date.id % 1000 === 0) {
-          console.log(`Seeded ${date.id} dates so far in ${(Date.now() - start) / 60000} minutes!`);
+          console.log(
+            `Seeded ${date.id} dates so far in ${(Date.now() - start) /
+              60000} minutes!`
+          );
         }
       })
       .catch(error => {

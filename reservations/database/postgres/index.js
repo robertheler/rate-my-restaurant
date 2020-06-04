@@ -4,8 +4,7 @@ moment().format();
 const each = require("async/each");
 
 const pool = new Pool({
-  host: "ec2-3-221-234-184.compute-1.amazonaws.com",
-  //host: "postgres", // change from local to postgres for deploying
+  host: "localhost", // change from local to postgres for deploying
   database: "ratemyrestaurant",
   user: "postgres",
   password: "",
@@ -57,39 +56,39 @@ const postRestaurant = (restaurant, callback) => {
 
 //DELETE api/restaurants/:id
 const deleteRestaurant = (id, callback) => {
-    pool.query(
-      `DELETE FROM availability
+  pool.query(
+    `DELETE FROM availability
                 WHERE table_id IN (
                 SELECT id FROM tables WHERE restaurant_id = ${id})`,
-      (err, res) => {
-        if (err) {
-          console.log(err);
-          callback(err);
-        } else {
-          pool.query(
-            `DELETE FROM tables WHERE restaurant_id = ${id}`,
-            (err, res) => {
-              if (err) {
-                console.log(err);
-                callback(err);
-              } else {
-                pool.query(
-                  `DELETE FROM restaurants WHERE id = ${id}`,
-                  (err, res) => {
-                    if (err) {
-                      console.log(err);
-                      callback(err);
-                    } else {
-                      callback(null, res);
-                    }
+    (err, res) => {
+      if (err) {
+        console.log(err);
+        callback(err);
+      } else {
+        pool.query(
+          `DELETE FROM tables WHERE restaurant_id = ${id}`,
+          (err, res) => {
+            if (err) {
+              console.log(err);
+              callback(err);
+            } else {
+              pool.query(
+                `DELETE FROM restaurants WHERE id = ${id}`,
+                (err, res) => {
+                  if (err) {
+                    console.log(err);
+                    callback(err);
+                  } else {
+                    callback(null, res);
                   }
-                );
-              }
+                }
+              );
             }
-          );
-        }
+          }
+        );
       }
-    );
+    }
+  );
 };
 
 //PATCH api/restaurants/:id
@@ -188,27 +187,27 @@ const patchTable = (id, updates, callback) => {
 
 //GET api/availability/:id
 const getAvailability = (id, callback) => {
-    pool.query(`SELECT * FROM availability WHERE id = ${id}`, (err, res) => {
-      if (err) {
-        console.log(err);
-        callback(err);
-      } else {
-        callback(null, res.rows[0]);
-      }
-    });
+  pool.query(`SELECT * FROM availability WHERE id = ${id}`, (err, res) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, res.rows[0]);
+    }
+  });
 };
 
 //POST api/availability
 const postAvailability = (availability, callback) => {
-    query = `INSERT INTO availability(table_id, date, times) VALUES($1, $2, $3)`;
-    values = [availability.table_id, availability.date, availability.times];
-    pool
-      .query(query, values)
-      .then(results => callback(null, results))
-      .catch(err => {
-        console.log(err);
-        callback(err);
-      });
+  query = `INSERT INTO availability(table_id, date, times) VALUES($1, $2, $3)`;
+  values = [availability.table_id, availability.date, availability.times];
+  pool
+    .query(query, values)
+    .then(results => callback(null, results))
+    .catch(err => {
+      console.log(err);
+      callback(err);
+    });
 };
 
 //DELETE api/availability/:id
@@ -292,7 +291,6 @@ const getAllAvailability = (id, callback) => {
   });
 };
 
-
 //GET /api/restaurants/:id/:date/:size
 const getSpecificAvailability = (id, date, size, callback) => {
   // pool.query(`SELECT name FROM restaurants WHERE id = ${id}`, (err, name) => {
@@ -301,44 +299,44 @@ const getSpecificAvailability = (id, date, size, callback) => {
   //     } else if (name.rows.length === 0) {
   //       callback(null, {});
   //     } else {
-        pool.query(
-          // `SELECT *
-          //   FROM availability
-          //   WHERE date::date = '${date}'
-          //   AND
-          //   table_id IN (SELECT id
-          //                 FROM tables
-          //                 WHERE restaurant_id = ${id}
-          //                 AND capacity >= ${size})`,
-          `SELECT *
+  pool.query(
+    // `SELECT *
+    //   FROM availability
+    //   WHERE date::date = '${date}'
+    //   AND
+    //   table_id IN (SELECT id
+    //                 FROM tables
+    //                 WHERE restaurant_id = ${id}
+    //                 AND capacity >= ${size})`,
+    `SELECT *
             FROM availability INNER JOIN tables
             ON (availability.table_id = tables.id)
             WHERE tables.restaurant_id = ${id}
             AND tables.capacity >= ${size}
             AND availability.date::date = '${date}'`,
-          (err, res) => {
-            if (err) {
-              callback(err);
-            } else {
-              let result = {
-                id: id,
-                //name: name.rows[0].name,
-                date: date,
-                tables: []
-              };
-              for (var i = 0; i < res.rows.length; i++) {
-                result.tables.push({
-                  id: res.rows[i].table_id,
-                  capacity: res.rows[i].capacity,
-                  times: res.rows[i].times
-                });
-              }
-              callback(err, result);
-            }
-          }
-        );
+    (err, res) => {
+      if (err) {
+        callback(err);
+      } else {
+        let result = {
+          id: id,
+          //name: name.rows[0].name,
+          date: date,
+          tables: []
+        };
+        for (var i = 0; i < res.rows.length; i++) {
+          result.tables.push({
+            id: res.rows[i].table_id,
+            capacity: res.rows[i].capacity,
+            times: res.rows[i].times
+          });
+        }
+        callback(err, result);
+      }
+    }
+  );
 
-    // });
+  // });
 };
 
 module.exports.pool = pool;

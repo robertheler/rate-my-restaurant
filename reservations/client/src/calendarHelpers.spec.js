@@ -2,9 +2,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 
-// use jest --updateSnapshot --'testNamePattern' to re-record snapshot of particular test
-
-import React from 'react';
 import calendarHelpers from './calendarHelpers.js';
 import testData from './calendarTestData.js';
 

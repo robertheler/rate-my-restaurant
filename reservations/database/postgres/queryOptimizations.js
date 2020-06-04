@@ -23,7 +23,7 @@ ON (availability.table_id = tables.id)
 WHERE tables.restaurant_id = $1
 AND tables.capacity >= $2
 AND availability.date::date = $3
-`
+`;
 let totalExecutionTime = 0;
 let totalPlanningTime = 0;
 for (var i = 0; i < 1000; i++) {
@@ -53,28 +53,27 @@ for (var i = 0; i < 1000; i++) {
         let executionTime = res.rows[res.rows.length - 1]["QUERY PLAN"];
         //console.log(executionTime);
         let start = executionTime.indexOf(":") + 2;
-        let end = executionTime.indexOf(" ms")
+        let end = executionTime.indexOf(" ms");
         let time = executionTime.substring(start, end);
-        totalExecutionTime +=  Number(time);
+        totalExecutionTime += Number(time);
 
         let planningTime = res.rows[res.rows.length - 2]["QUERY PLAN"];
         //console.log(timeOutput);
         start = planningTime.indexOf(":") + 2;
-        end = planningTime.indexOf(" ms")
+        end = planningTime.indexOf(" ms");
         time = planningTime.substring(start, end);
-        totalPlanningTime +=  Number(time);
+        totalPlanningTime += Number(time);
       }
     }
   );
 }
 setTimeout(() => {
-  console.log('Average Planning Time: ', totalPlanningTime/1000);
+  console.log("Average Planning Time: ", totalPlanningTime / 1000);
 }, 3000);
 
 setTimeout(() => {
-  console.log('Average Execution Time: ', totalExecutionTime/1000);
-}, 3000)
-
+  console.log("Average Execution Time: ", totalExecutionTime / 1000);
+}, 3000);
 
 function getDate(offSet) {
   let start = new Date();

@@ -14,7 +14,7 @@ export let options = {
       // Test runs with the same name groups test runs together
       name: "--vus 50 --duration 60s"
     }
-  },
+  }
   // stages: [
   //   { duration: '2m', target: 1000 }, // beyond the breaking point
   //   { duration: '5m', target: 1000 },
@@ -31,10 +31,9 @@ export default function() {
   let date = getDate(Math.floor(Math.random() * 100));
   let size = Math.floor(Math.random() * 12);
 
-  //let res = http.get(`http://http://54.235.9.49:3001/api/restaurants/${id}/${date}/${size}`);
-  //54.235.9.49
-  //http://54.144.124.91:3001/
-  let res = http.get(`http://18.213.137.110:3001/api/restaurants/${id}/${date}/${size}`);
+  let res = http.get(
+    `http://localhost:3001/api/restaurants/${id}/${date}/${size}`
+  );
   check(res, {
     "No errors": r => r.status === 200,
     "Transaction time under 2000ms": r => r.timings.duration < 2000

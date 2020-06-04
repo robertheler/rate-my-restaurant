@@ -4,13 +4,13 @@ moment().format();
 const generate = new Fakerator();
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 
-let data =[]
+let data = [];
 for (let i = 0; i <= 1000000; i++) {
   let id = generate.random.number(0, 9999);
   let date = getDate(generate.random.number(0, 100));
   let size = generate.random.number(1, 12);
 
-  data.push({id, date, size})
+  data.push({ id, date, size });
 }
 
 const csvWriter = createCsvWriter({
@@ -18,7 +18,7 @@ const csvWriter = createCsvWriter({
   header: [
     { id: "id", title: "id" },
     { id: "date", title: "date" },
-    { id: "size", title: "size" },
+    { id: "size", title: "size" }
   ]
 });
 

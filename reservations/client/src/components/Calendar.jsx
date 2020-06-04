@@ -1,15 +1,15 @@
-import styled from 'styled-components';
-import React from 'react';
-import MonthSelector from './MonthSelector.jsx';
-import CalendarTable from './CalendarTable.jsx';
-import calendarHelpers from '../calendarHelpers.js';
+import styled from "styled-components";
+import React from "react";
+import MonthSelector from "./MonthSelector.jsx";
+import CalendarTable from "./CalendarTable.jsx";
+import calendarHelpers from "../calendarHelpers.js";
 
 const CalendarWrapper = styled.div`
   border: 0;
-  display: ${(props) => (props.displayed ? 'inline-block' : 'none')};
+  display: ${props => (props.displayed ? "inline-block" : "none")};
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 0 18px rgba(0, 0, 0, .15);
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.15);
   min-width: 312px;
   border: 1px solid #ccc;
   position: absolute;
@@ -26,13 +26,17 @@ class Calendar extends React.Component {
       getNextMonth: this.getNextMonth.bind(this),
       getPreviousMonth: this.getPreviousMonth.bind(this),
       isPast: this.isPast.bind(this),
-      isToday: this.isToday.bind(this),
+      isToday: this.isToday.bind(this)
     };
     this.todaysDate = new Date().getDate();
     this.todaysYear = new Date().getYear() + 1900;
     this.todaysMonth = new Date().getMonth();
 
-    this.todaysId = calendarHelpers.createId(this.todaysYear, this.todaysMonth, this.todaysDate);
+    this.todaysId = calendarHelpers.createId(
+      this.todaysYear,
+      this.todaysMonth,
+      this.todaysDate
+    );
     this.latestMonthAllowed = calendarHelpers.getLatestMonth(this.todaysMonth);
 
     // if the calendar were a standalone component, it requires the selectedDateId state locally
@@ -43,7 +47,10 @@ class Calendar extends React.Component {
     this.state = {
       selectedMonthNumber: this.todaysMonth,
       selectedYear: this.todaysYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.todaysYear, this.todaysMonth),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(
+        this.todaysYear,
+        this.todaysMonth
+      )
     };
   }
 
@@ -57,7 +64,10 @@ class Calendar extends React.Component {
     this.setState({
       selectedMonthNumber,
       selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(
+        selectedYear,
+        selectedMonthNumber
+      )
     });
   }
 
@@ -71,7 +81,10 @@ class Calendar extends React.Component {
     this.setState({
       selectedMonthNumber,
       selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(
+        selectedYear,
+        selectedMonthNumber
+      )
     });
   }
 
@@ -85,15 +98,23 @@ class Calendar extends React.Component {
 
   render() {
     return (
-    <CalendarWrapper onClick={this.props.reservationMethods.showCalendar}
-    // displayed is passed down through main app state
-     displayed={this.props.topState.displayCalendar}>
-      <MonthSelector state={this.state}
-      calendarMethods={this.calendarMethods} latestMonth={this.latestMonthAllowed}/>
-      <CalendarTable state={this.state}
-      calendarMethods={this.calendarMethods} reservationMethods={this.props.reservationMethods}
-      selectedId={this.props.topState.selectedDateId}/>
-   </CalendarWrapper>
+      <CalendarWrapper
+        onClick={this.props.reservationMethods.showCalendar}
+        // displayed is passed down through main app state
+        displayed={this.props.topState.displayCalendar}
+      >
+        <MonthSelector
+          state={this.state}
+          calendarMethods={this.calendarMethods}
+          latestMonth={this.latestMonthAllowed}
+        />
+        <CalendarTable
+          state={this.state}
+          calendarMethods={this.calendarMethods}
+          reservationMethods={this.props.reservationMethods}
+          selectedId={this.props.topState.selectedDateId}
+        />
+      </CalendarWrapper>
     );
   }
 }

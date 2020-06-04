@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
-import calendarHelpers from '../calendarHelpers.js';
-import ReservationBox from './ReservationBox.jsx';
-const host = 'http://localhost:3001';
+import React from "react";
+import ReactDOM from "react-dom";
+import $ from "jquery";
+import calendarHelpers from "../calendarHelpers.js";
+import ReservationBox from "./ReservationBox.jsx";
+const host = "http://localhost:3001";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,43 +15,46 @@ class App extends React.Component {
     this.reservationMethods = {
       selectDate: this.selectDate.bind(this),
       showCalendar: this.showCalendar.bind(this),
-      hideCalendar: this.hideCalendar.bind(this),
+      hideCalendar: this.hideCalendar.bind(this)
     };
 
-    this.todaysId = calendarHelpers.createId(new Date().getYear() + 1900, new Date().getMonth(),
-      new Date().getDate());
+    this.todaysId = calendarHelpers.createId(
+      new Date().getYear() + 1900,
+      new Date().getMonth(),
+      new Date().getDate()
+    );
 
     // selectedDateId 'lifted up' from Calendar App to be used for ReservationBox
 
     this.state = {
       dates_closed: [],
-      restaurant_name: '',
+      restaurant_name: "",
       timeslots: [[1100], [1100], [1100], [1100], [1100], [1100], [1100]],
       selectedDateId: this.todaysId,
-      displayCalendar: false,
+      displayCalendar: false
     };
   }
 
   componentDidMount() {
-    document.body.addEventListener('click', this.hideCalendar.bind(this));
+    document.body.addEventListener("click", this.hideCalendar.bind(this));
     this.getScheduleData();
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener('click', this.hideCalendar.bind(this));
+    document.body.removeEventListener("click", this.hideCalendar.bind(this));
   }
 
   getScheduleData() {
     let id = 2;
     $.ajax({
       url: `/legacy/${id}`,
-      success: (data) => {
+      success: data => {
         this.setData(data);
       },
       error: () => {
-        console.log('Could not retrieve schedule data');
+        console.log("Could not retrieve schedule data");
       },
-      dataType: 'json',
+      dataType: "json"
     });
   }
 
@@ -59,14 +62,14 @@ class App extends React.Component {
     this.setState({
       dates_closed: scheduleData.dates_closed,
       restaurant_name: scheduleData.restaurantName,
-      timeslots: scheduleData.timeslots,
+      timeslots: scheduleData.timeslots
     });
   }
 
   delayedClose() {
     setTimeout(() => {
       this.setState({
-        displayCalendar: false,
+        displayCalendar: false
       });
     }, 200);
   }
@@ -77,33 +80,39 @@ class App extends React.Component {
 
   selectDate(e) {
     const dateId = parseFloat(e.target.id);
-    this.setState({
-      selectedDateId: dateId,
-    }, this.delayedClose);
+    this.setState(
+      {
+        selectedDateId: dateId
+      },
+      this.delayedClose
+    );
   }
 
   showCalendar() {
     this.setState({
-      displayCalendar: true,
+      displayCalendar: true
     });
   }
 
   hideCalendar() {
     this.setState({
-      displayCalendar: false,
+      displayCalendar: false
     });
   }
 
   render() {
     return (
-      <div className='calendar-container'>
-        <ReservationBox state={this.state} reservationMethods={this.reservationMethods}/>
+      <div className="calendar-container">
+        <ReservationBox
+          state={this.state}
+          reservationMethods={this.reservationMethods}
+        />
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('reservations'));
+ReactDOM.render(<App />, document.getElementById("reservations"));
 
 // assign unique numerical values as ids to each table cell - done
 // check if each cell's value is less than the value of the current date

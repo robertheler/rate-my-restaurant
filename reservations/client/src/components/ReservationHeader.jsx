@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import React from 'react';
+import styled from "styled-components";
+import React from "react";
 
 const ReservationHeaderBox = styled.div`
   width: 329px;
@@ -10,7 +10,7 @@ const ReservationHeaderBox = styled.div`
   margin-bottom: 16px;
 `;
 
-const ReservationHeader = (props) => (
+const ReservationHeader = props => (
   <ReservationHeaderBox>Make a Reservation</ReservationHeaderBox>
 );
 
