@@ -11,11 +11,12 @@
     "start": "nodemon /server/index.js",
     "compile": "webpack -d --watch",
     "snapshot-all": "jest --updateSnapshot",
-    "seed-postgres": "psql -U postgres < ./database/postgres/schema.sql",
+    "seed-postgres": "psql < ./database/postgres/schema.sql",
     "generate-restaurants": "node --max-old-space-size=8192 ./database/generateRestaurants.js",
     "generate-tables": "node --max-old-space-size=8192 ./database/generateTables.js",
     "generate-availability": "node --max-old-space-size=8192 ./database/generateAvailability.js",
-    "generate-requests": "node --max-old-space-size=8192 ./server/generateRequests.js"
+    "generate-requests": "node --max-old-space-size=8192 ./server/generateRequests.js",
+    "start-container": "npm run seed-postgres && npm run start"
   },
   "dependencies": {
     "async": "^3.2.0",

@@ -1,0 +1,7 @@
+version: "2"
+services:
+  nginx:
+    #image: robertheler/fec-solo
+    build: .
+    ports:
+      - "3000:3000"

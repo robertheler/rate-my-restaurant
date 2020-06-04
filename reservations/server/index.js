@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.static(publicFolder));
 
 app.listen(3001, () => {
-  console.log('Server listening on port http://localhost:3001');
+  console.log('Server listening on port 3001');
 });
 
 app.get('/', (req, res) => {

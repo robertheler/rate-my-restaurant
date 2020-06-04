@@ -2,3 +2,4 @@ node_modules
 reservations/database/data
 reservations/newrelic.js
 reservations/server/newrelic.js
+reservations/rootkey.zsh

@@ -1,0 +1,21 @@
+config:
+  target: 'http://54.197.3.154:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 60
+  payload:
+    path: 'requests.csv'
+    fields:
+      - 'id'
+      - 'date'
+      - 'size'
+    skipHeader: true
+    order: random
+
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - flow:
+    - get:
+        url: "/api/restaurants/{{ id }}/{{ date }}/{{ size }}"

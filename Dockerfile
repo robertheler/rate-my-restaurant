@@ -1,13 +1,4 @@
-FROM node:latest
-
-RUN mkdir -p /src/app
-
-WORKDIR /src/app
-
-COPY . /src/app
-
-RUN npm install
-
-EXPOSE 3005
-
-CMD [ "npm", "run", "start-main"]
+FROM nginx
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY loaderio-35191e4f7dafe6433e6c5622632edf99.html /var/www

@@ -4,9 +4,10 @@ moment().format();
 const each = require("async/each");
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost", // change to databse for deplying
+  host: "ec2-3-221-234-184.compute-1.amazonaws.com",
+  //host: "postgres", // change from local to postgres for deploying
   database: "ratemyrestaurant",
+  user: "postgres",
   password: "",
   port: 5432,
   prepared_statements: true,
@@ -20,7 +21,6 @@ const getRestaurant = (id, callback) => {
   pool.query(`SELECT * FROM restaurants WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log(err);
-      NewRelic.Api.Agent.NewRelic.NoticeError(err);
       callback(err);
     } else {
       callback(null, res.rows[0]);
