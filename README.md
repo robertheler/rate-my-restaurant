@@ -67,11 +67,15 @@ npm start
 ```
 ### Get restaurant
 
-- GET `/api/restaurants`
+- GET `/api/restaurants/:id`
 
-**Success Status Code:** `201`
+**Path Parameters:**
 
-**Request Body**: Expects JSON with the following keys.
+- `id` restaurant id
+
+**Success Status Code:** `200`
+
+**Returns:** JSON
 
 ```json
 {
@@ -93,7 +97,7 @@ npm start
 
 **Success Status Code:** `201`
 
-**Request Body**: Expects JSON with the following keys.
+**Request Body**: Expects JSON with ANY of the following keys.
 
 ```json
 {
