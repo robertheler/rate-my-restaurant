@@ -1,10 +1,4 @@
 # RateMyRestaurant
-
-## React Calendar & Booking Component
-by Kiefer Ragay https://github.com/patriot898
-
-![Sample Component](/demos/component.gif)
-
 ## Query-Optimized Postgres Database With Over 10,000,0000 Records
 ![Sample Query](/demos/query.png)
 ## Verically and Horizontally Scalabale Using AWS EC2
@@ -14,24 +8,33 @@ by Kiefer Ragay https://github.com/patriot898
 ### Sample loader.io Output for 2500 Clients/Second Stress Test (11ms Response Time) 
 ![Sample Loader.io](/demos/2500vsu.png)
 
-## Getting Started
+## React Calendar & Booking Component
+by Kiefer Ragay https://github.com/patriot898
 
-### Environment Setup
-```ssh
-cd reservations
-npm install
-npm run compile
-npm start
-```
+![Sample Component](/demos/component.gif)
 
-### Generate Data and Seeed the Database
-```sh
- npm run generate-restaurants
- npm run generate-tables
- npm run generate-availability
- npm run seed-postgres
-```
 ## Server API
+### Routes (See Examples Below)
+GET
+`/api/restaurants/:id`
+`/api/tables/:id`
+`/api/availability/:id`
+`/api/restaurants/:id/:date/:size`
+
+POST
+`/api/restaurants`
+`/api/tables`
+`/api/availability`
+
+PATCH
+`/api/restaurants/:id`
+`/api/tables/:id`
+`/api/availability/:id`
+
+DELETE
+`/api/restaurants/:id`
+`/api/tables/:id`
+`/api/availability/:id`
 
 ### Get restaurant avaialability for given date and party size
 
@@ -147,3 +150,20 @@ npm start
 - `id` table id
 
 **Success Status Code:** `204`
+
+
+## Getting Started
+### Environment Setup
+```ssh
+cd reservations
+npm install
+npm run compile
+npm start
+```
+### Generate Data and Seeed the Database
+```sh
+ npm run generate-restaurants
+ npm run generate-tables
+ npm run generate-availability
+ npm run seed-postgres
+```
