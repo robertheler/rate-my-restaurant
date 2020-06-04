@@ -29,13 +29,13 @@ for 2500 Clients/Second Stress Test (11ms Response Time)
 ![Sample Loader.io](/demos/2500vsu.png)
 
 ## Query-Optimized Postgres Database With Over 10 Million Records
+Under 5ms execution time for main API route
 ![Sample Query](/demos/query.png)
 
 ## React Calendar and Booking Component
 by Kiefer Ragay https://github.com/patriot898
 
 ![Sample Component](/demos/component.gif)
-
 ## Server API
 ### Routes
 GET
