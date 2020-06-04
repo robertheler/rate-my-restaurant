@@ -1,3 +1,21 @@
+## Getting Started
+
+# Environment Setup
+``
+cd reservations
+npm install
+npm run compile
+npm start
+``
+
+# Generate and Seeeding the database
+``
+  npm run generate-restaurants
+  npm run generate-tables
+  npm run generate-availability
+  npm run seed-postgres
+``
+
 ## Server API
 
 ### Get restaurant avaialability for given date and party size
